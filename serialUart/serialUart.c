@@ -44,3 +44,17 @@ Implementar las funciones:
 existeCaracter()
 leerCaracter()
 */
+void existeCaracter(uint8_t existeDato)
+{
+    existeDato = 0b0;
+    if(USART1->SR & (1<<5));
+    {
+        existeDato = 0b1;  
+    }
+}
+
+void leerCaracter(uint8_t caracter)
+{
+    while(!(USART1->SR & (1<<5)));
+    caracter = (USART1->DR & (0xFF));
+}

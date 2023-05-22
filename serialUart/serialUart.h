@@ -11,3 +11,6 @@ Desarrollar el prototipo de las funciones:
 existeCaracter()
 leerCaracter()
 */
+
+void existeCaracter(uint8_t existeDato);
+void leerCaracter(uint8_t caracter);
