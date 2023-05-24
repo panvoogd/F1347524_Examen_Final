@@ -20,3 +20,7 @@ girarDerecha(),
 girarIzquierda()
 */
 void inicializarModulo (void);
+void avanzar(uint8_t vel);
+void retroceder(uint8_t vel);
+void girarDerecha(void);
+void girarIzquiera(void);

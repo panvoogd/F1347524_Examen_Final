@@ -28,11 +28,74 @@ void inicializarModulo()
     TIM4_CCMR2 |= ((0x68 << 8) | (0x68 << 0)); 
     TIM4_BDTR |= (1 << 15);
     TIM4_CCER |= (1 << 12) | (1 << 8);
-    TIM4_PSC = 7;
+    TIM4_PSC = 7; // Prescaler, frecuencia de Clk 1 MHz
 
-    TIM4_ARR = 40000;
-    TIM4_CCR4 = 0;
-    TIM4_CCR3 = 0;
+    TIM4_ARR = 40000; // Con esto se genera onda de 100 Hz
+    TIM4_CCR4 = 0; // Duty cycle a 0%
+    TIM4_CCR3 = 0; // Duty cycle a 0%
 
-    TIM4_CR1 |= (1<<7)|(1<<0);
+    TIM4_CR1 |= (1<<7)|(1<<0); // Se habilita el temporizador
+}
+
+void avanzar(uint8_t vel)
+{
+     GPIOA->ODR |= (0x6 << 5); // PA5 y PA6 en ALTA
+     GPIOA->ODR &= ~(0x9 << 4); // PA4 y PA7 en BAJA
+     if (vel == 1) // Velocidad 1
+     {
+        TIM4_CCR4 = 20000; // duty cycle a 50%
+        TIM4_CCR3 = 20000; // duty cycle a 50%
+        delay(1000); // 
+     }
+     if (vel == 2) // Velocidad 2
+     {
+        TIM4_CCR4 = 40000; // duty cycle a 100%
+        TIM4_CCR3 = 40000; // duty cycle a 100%
+        delay(1000);
+     }
+    TIM4_CCR4 = 0; // Se pone el duty cycle a 0% de nuevo
+    TIM4_CCR3 = 0; // Se pone el duty cycle a 0% de nuevo
+}
+void retroceder(uint8_t vel)
+{
+     GPIOA->ODR &= ~(0x6 << 5); // PA5 y PA6 en BAJA
+     GPIOA->ODR |= (0x9 << 4); // PA4 y PA7 en ALTA
+     if (vel == 1) // Velocidad 1
+     {
+        TIM4_CCR4 = 20000; // duty cycle a 50%
+        TIM4_CCR3 = 20000; // duty cycle a 50%
+        delay(1000); // 
+     }
+     if (vel == 2) // Velocidad 2
+     {
+        TIM4_CCR4 = 40000; // duty cycle a 100%
+        TIM4_CCR3 = 40000; // duty cycle a 100%
+        delay(1000);
+     }
+    TIM4_CCR4 = 0; // Se pone el duty cycle a 0% de nuevo
+    TIM4_CCR3 = 0; // Se pone el duty cycle a 0% de nuevo
+}
+
+void girarIzquierda()
+{
+    GPIOA->ODR |= (0x5 << 5); // PA5 y PA7 en ALTA
+    GPIOA->ODR &= ~(0x5 << 4); // PA4 y PA6 en BAJA
+    
+    TIM4_CCR4 = 20000; // duty cycle a 50%
+    TIM4_CCR3 = 20000; // duty cycle a 50%
+    delay(1000); // Delay de 1 segundo
+    TIM4_CCR4 = 0; // Se pone el duty cycle a 0% de nuevo
+    TIM4_CCR3 = 0; // Se pone el duty cycle a 0% de nuevo
+}
+
+void girarDerecha()
+{
+    GPIOA->ODR &= ~(0x5 << 5); // PA5 y PA7 en BAJA
+    GPIOA->ODR |= (0x5 << 4); // PA4 y PA6 en ALTA
+    
+    TIM4_CCR4 = 20000; // duty cycle a 50%
+    TIM4_CCR3 = 20000; // duty cycle a 50%
+    delay(1000); // Delay de 1 segundo
+    TIM4_CCR4 = 0; // Se pone el duty cycle a 0% de nuevo
+    TIM4_CCR3 = 0; // Se pone el duty cycle a 0% de nuevo
 }

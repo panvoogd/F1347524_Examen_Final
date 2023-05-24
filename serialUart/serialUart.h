@@ -12,5 +12,5 @@ existeCaracter()
 leerCaracter()
 */
 
-void existeCaracter(uint8_t existeDato);
-void leerCaracter(uint8_t caracter);
+uint_8t existeCaracter(void);
+uint_8t leerCaracter(void);
